@@ -1,12 +1,13 @@
 #include <iostream>
 #include <string>
-enum types { Nor = 0, And = 1, Or = 2, Xor = 3, flip = 5 };
+enum types { Nor = 0, And = 1, Or = 2, Xor = 3, flip = 5, nand = 10};
 char objects[30000];
 int currentfreespace = 0;
 int currentindex = 1;
+short currentfreespaceinarray = 0;
 bool wired = true;
-struct object {
-    object()
+struct block {
+    block()
         :x(0), y(0), z(0), is_on(0), type(0), index(currentindex), hasconsecutiveblock(true), hasconsecutiveblockrepresenter("\0")
     {
         currentindex += 1;
@@ -62,7 +63,7 @@ public:
       }
     }
 };
-void createwire(object a, object b, bool hasmorewires, bool is_starting_wire, bool is_ending_wire) {
+void createwire(block a, block b, bool hasmorewires, bool is_starting_wire, bool is_ending_wire) {
     std::string index1 = std::to_string(a.index);
     std::string index2 = std::to_string(b.index);
     if (hasmorewires == false) {
@@ -157,6 +158,27 @@ void createwire(object a, object b, bool hasmorewires, bool is_starting_wire, bo
         currentfreespace += index1.size() + index2.size() + 2;
         return;
     }
+}
+void createblockar(block a[], short arraylength){ // create block array
+  for(int i = 0; i < arraylength; i++){
+    a[i].create();
+  }
+}
+void fawb(block a[], short arraylength, block paste){ // fill array with block(paste)
+  for(int i = 0; i < arraylength; i++){
+    a[i] = paste;
+    paste.y++;
+    if(paste.y > 7){
+      paste.y = 0;
+      paste.z = 1;
+    }
+  }
+}
+void maca(block a[],block b[], short arraybsize){
+  for(int i = 0; i < arraybsize; i++){
+    a[currentfreespaceinarray] = b[currentfreespaceinarray];
+    currentfreespaceinarray++;
+  }
 }
 int main() {
     for (int i = 0; i < currentfreespace; i++) {
