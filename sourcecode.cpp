@@ -174,7 +174,7 @@ void fawb(block a[], short arraylength, block paste){ // fill array with block(p
     }
   }
 }
-void maca(block a[],block b[], short arraybsize){
+void maca(block a[],block b[], short arraybsize){ // make array(a) contain array(b)
   for(int i = 0; i < arraybsize; i++){
     a[currentfreespaceinarray] = b[currentfreespaceinarray];
     currentfreespaceinarray++;
